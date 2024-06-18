@@ -4,7 +4,8 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const PORT = 5005;
-const Cohort = require("./models/Cohort.model")
+const Cohort = require("./models/Cohort.model");
+const Student = require("./models/Student.model");
 
 const app = express(); 
 
