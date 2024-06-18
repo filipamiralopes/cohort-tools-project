@@ -10,8 +10,8 @@ const Student = require("./models/Student.model");
 const app = express(); 
 
 // STATIC DATA
-const cohorts = require("./cohorts.json");
-const students = require("./students.json");
+// const cohorts = require("./cohorts.json");
+// const students = require("./students.json");
 
 
 // MIDDLEWARE
@@ -28,7 +28,7 @@ app.use(
 
 // DATABASE
 mongoose
-  .connect("mongodb://127.0.0.1:27017/mongoose-example-dev")
+  .connect("mongodb://127.0.0.1:27017/cohort-tools-api")
   .then(x => console.log(`Connected to Database: "${x.connections[0].name}"`))
   .catch(err => console.error("Error connecting to MongoDB", err));
 
