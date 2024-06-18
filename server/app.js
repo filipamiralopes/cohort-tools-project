@@ -2,7 +2,9 @@ const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const mongoose = require("mongoose");
 const PORT = 5005;
+const Cohort = require("./models/Cohort.model")
 
 const app = express(); 
 
@@ -22,6 +24,12 @@ app.use(
     origin: ['http://localhost:5170'], // Add the URLs of allowed origins to this array
   })
 );
+
+// DATABASE
+mongoose
+  .connect("mongodb://127.0.0.1:27017/mongoose-example-dev")
+  .then(x => console.log(`Connected to Database: "${x.connections[0].name}"`))
+  .catch(err => console.error("Error connecting to MongoDB", err));
 
 // ROUTES
 app.get("/docs", (req, res) => {
