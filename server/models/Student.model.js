@@ -12,6 +12,10 @@ const studentSchema = new Schema({
     background: {type: String, default: ""},
     image: {type: String, default: "https://i.imgur.com/r8bo8u7.png"},
     cohort: Schema.ObjectId,
+    // cohort: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Cohort" // "Cohort" is the model to which we are creating a reference relationship
+    // },
     projects: Array
 })
 
