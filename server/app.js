@@ -42,7 +42,7 @@ app.get("/api/cohorts", (req, res) => {
   Cohort.find()
     .then((cohorts) => {
       console.log("Retrieved cohorts ->", cohorts);
-      res.json(cohorts);
+      res.status(200).json(cohorts);
     })
     .catch((error) => {
       console.error("Error while retrieving cohorts ->", error);
@@ -54,7 +54,7 @@ app.get("/api/cohorts/:cohortId", (req, res) => {
   Cohort.findById(req.params.cohortId)
     .then((cohort) => {
       console.log("Retrieved cohort ->", cohort);
-      res.json(cohort);
+      res.status(200).json(cohort);
     })
     .catch((error) => {
       console.error("Error while retrievin cohort ->", error);
@@ -66,7 +66,7 @@ app.post("/api/cohorts", (req, res) => {
   Cohort.create(req.body)
     .then((newCohort) => {
       console.log("Created cohort ->", newCohort);
-      res.json(newCohort);
+      res.status(201).json(newCohort);
     })
     .catch((error) => {
       console.error("Error while creating cohort ->", error);
@@ -78,7 +78,7 @@ app.put("/api/cohorts/:cohortId", (req, res) => {
   Cohort.findByIdAndUpdate(req.params.cohortId, req.body, { new: true })
     .then((updatedCohort) => {
       console.log("Updated cohort ->", updatedCohort);
-      res.json(updatedCohort);
+      res.status(201).json(updatedCohort);
     })
     .catch((error) => {
       console.error("Error while updating cohort ->", error);
@@ -90,7 +90,7 @@ app.delete("/api/cohorts/:cohortId", (req, res) => {
   Cohort.findByIdAndDelete(req.params.cohortId)
     .then((deletedCohort) => {
       console.log("Deleted cohort ->", deletedCohort);
-      res.json(`Cohort with id ${req.params.cohortId} was deleted`);
+      res.status(204).json(`Cohort with id ${req.params.cohortId} was deleted`);
     })
     .catch((error) => {
       console.error("Error while deleting cohort ->", error);
@@ -104,7 +104,7 @@ app.get("/api/students", (req, res) => {
   Student.find().populate("cohort")
     .then((students) => {
       console.log("Retrieved students ->", students);
-      res.json(students);
+      res.status(200).json(students);
     })
     .catch((error) => {
       console.error("Error while retrieving students ->", error);
@@ -116,7 +116,7 @@ app.get("/api/students/cohort/:cohortId", (req, res) => { // Returns all the stu
   Student.find({cohort: req.params.cohortId}).populate("cohort")
     .then((students) => {
       console.log("Retrieved students for this cohort ->", students);
-      res.json(students);
+      res.status(200).json(students);
     })
     .catch((error) => {
       console.error("Error while retrieving students ->", error);
@@ -128,7 +128,7 @@ app.get("/api/students/:studentId", (req, res) => {
   Student.findById(req.params.studentId).populate("cohort")
     .then((students) => {
       console.log("Retrieved students ->", students);
-      res.json(students);
+      res.status(200).json(students);
     })
     .catch((error) => {
       console.error("Error while retrieving students ->", error);
@@ -140,7 +140,7 @@ app.post("/api/students", (req, res) => {
   Student.create(req.body)
     .then((createdStudent) => {
       console.log("Created student ->", createdStudent);
-      res.json(createdStudent);
+      res.status(201).json(createdStudent);
     })
     .catch((error) => {
       console.error("Error while creating student ->", error);
@@ -152,7 +152,7 @@ app.put("/api/students/:studentId", (req, res) => {
   Student.findByIdAndUpdate(req.params.studentId, req.body, { new: true })
     .then((updatedStudent) => {
       console.log("Updated student ->", updatedStudent);
-      res.json(updatedStudent);
+      res.status(201).json(updatedStudent);
     })
     .catch((error) => {
       console.error("Error while updating student ->", error);
@@ -164,7 +164,7 @@ app.delete("/api/students/:studentId", (req, res) => {
   Student.findByIdAndDelete(req.params.studentId)
     .then((deletedStudent) => {
       console.log("Deleted student ->", deletedStudent);
-      res.json(`Student with id ${req.params.studentId} was deleted`);
+      res.status(204).json(`Student with id ${req.params.studentId} was deleted`);
     })
     .catch((error) => {
       console.error("Error while deleting student ->", error);
