@@ -101,7 +101,7 @@ app.delete("/api/cohorts/:cohortId", (req, res) => {
 // Students
 
 app.get("/api/students", (req, res) => {
-  Student.find()
+  Student.find().populate("cohort")
     .then((students) => {
       console.log("Retrieved students ->", students);
       res.json(students);
@@ -113,7 +113,7 @@ app.get("/api/students", (req, res) => {
 });
 
 app.get("/api/students/cohort/:cohortId", (req, res) => { // Returns all the students of a specified cohort in JSON format
-  Student.find({cohort: req.params.cohortId})
+  Student.find({cohort: req.params.cohortId}).populate("cohort")
     .then((students) => {
       console.log("Retrieved students for this cohort ->", students);
       res.json(students);
@@ -125,7 +125,7 @@ app.get("/api/students/cohort/:cohortId", (req, res) => { // Returns all the stu
 });
 
 app.get("/api/students/:studentId", (req, res) => {
-  Student.findById(req.params.studentId)
+  Student.findById(req.params.studentId).populate("cohort")
     .then((students) => {
       console.log("Retrieved students ->", students);
       res.json(students);
