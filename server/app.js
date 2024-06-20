@@ -90,7 +90,7 @@ app.delete("/api/cohorts/:cohortId", (req, res) => {
   Cohort.findByIdAndDelete(req.params.cohortId)
     .then((deletedCohort) => {
       console.log("Deleted cohort ->", deletedCohort);
-      res.status(204).json(`Cohort with id ${req.params.cohortId} was deleted`);
+      res.status(200).json(`Cohort with id ${req.params.cohortId} was deleted`);
     })
     .catch((error) => {
       console.error("Error while deleting cohort ->", error);
@@ -164,7 +164,7 @@ app.delete("/api/students/:studentId", (req, res) => {
   Student.findByIdAndDelete(req.params.studentId)
     .then((deletedStudent) => {
       console.log("Deleted student ->", deletedStudent);
-      res.status(204).json(`Student with id ${req.params.studentId} was deleted`);
+      res.status(200).json(`Student with id ${req.params.studentId} was deleted`);
     })
     .catch((error) => {
       console.error("Error while deleting student ->", error);
