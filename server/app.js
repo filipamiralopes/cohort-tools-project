@@ -101,7 +101,7 @@ app.delete("/api/cohorts/:cohortId", (req, res) => {
 // Students
 
 app.get("/api/students", (req, res) => {
-  Student.find({})
+  Student.find()
     .then((students) => {
       console.log("Retrieved students ->", students);
       res.json(students);
@@ -109,6 +109,66 @@ app.get("/api/students", (req, res) => {
     .catch((error) => {
       console.error("Error while retrieving students ->", error);
       res.status(500).json({ error: "Failed to retrieve students" });
+    });
+});
+
+app.get("/api/students/cohort/:cohortId", (req, res) => { // Returns all the students of a specified cohort in JSON format
+  Student.find({cohort: req.params.cohortId})
+    .then((students) => {
+      console.log("Retrieved students for this cohort ->", students);
+      res.json(students);
+    })
+    .catch((error) => {
+      console.error("Error while retrieving students ->", error);
+      res.status(500).json({ error: "Failed to retrieve students" });
+    });
+});
+
+app.get("/api/students/:studentId", (req, res) => {
+  Student.findById(req.params.studentId)
+    .then((students) => {
+      console.log("Retrieved students ->", students);
+      res.json(students);
+    })
+    .catch((error) => {
+      console.error("Error while retrieving students ->", error);
+      res.status(500).json({ error: "Failed to retrieve students" });
+    });
+});
+
+app.post("/api/students", (req, res) => {
+  Student.create(req.body)
+    .then((createdStudent) => {
+      console.log("Created student ->", createdStudent);
+      res.json(createdStudent);
+    })
+    .catch((error) => {
+      console.error("Error while creating student ->", error);
+      res.status(500).json({ error: `Failed to create student with name ${req.body.firstName}` });
+    });
+});
+
+app.put("/api/students/:studentId", (req, res) => {
+  Student.findByIdAndUpdate(req.params.studentId, req.body, { new: true })
+    .then((updatedStudent) => {
+      console.log("Updated student ->", updatedStudent);
+      res.json(updatedStudent);
+    })
+    .catch((error) => {
+      console.error("Error while updating student ->", error);
+      res.status(500).json({ error: `Failed to update student: , ${error["message"]}` });
+    });
+});
+
+app.delete("/api/students/:studentId", (req, res) => {
+  Student.findByIdAndDelete(req.params.studentId)
+    .then((deletedStudent) => {
+      console.log("Deleted student ->", deletedStudent);
+      res.json(`Student with id ${req.params.studentId} was deleted`);
+    })
+    .catch((error) => {
+      console.error("Error while deleting student ->", error);
+      res.status(500).json({ error: `Failed to delete student: , ${error["message"]}` });
     });
 });
 
