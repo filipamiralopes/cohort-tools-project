@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Student = require("../models/Student.model");
 
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
   Student.find()
     .populate("cohort")
     .then((students) => {
@@ -10,11 +10,11 @@ router.get("/", (req, res) => {
     })
     .catch((error) => {
       console.error("Error while retrieving students ->", error);
-      res.status(500).json({ error: "Failed to retrieve students" });
+      next(error);
     });
 });
 
-router.get("/cohort/:cohortId", (req, res) => {
+router.get("/cohort/:cohortId", (req, res, next) => {
   // Returns all the students of a specified cohort in JSON format
   Student.find({ cohort: req.params.cohortId })
     .populate("cohort")
@@ -24,11 +24,11 @@ router.get("/cohort/:cohortId", (req, res) => {
     })
     .catch((error) => {
       console.error("Error while retrieving students ->", error);
-      res.status(500).json({ error: "Failed to retrieve students" });
+      next(error);
     });
 });
 
-router.get("/:studentId", (req, res) => {
+router.get("/:studentId", (req, res, next) => {
   Student.findById(req.params.studentId)
     .populate("cohort")
     .then((students) => {
@@ -37,27 +37,26 @@ router.get("/:studentId", (req, res) => {
     })
     .catch((error) => {
       console.error("Error while retrieving students ->", error);
-      res.status(500).json({ error: "Failed to retrieve students" });
+      next(error);
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", (req, res, next) => {
   Student.create(req.body)
     .then((createdStudent) => {
       console.log("Created student ->", createdStudent);
       res.status(201).json(createdStudent);
     })
     .catch((error) => {
-      console.error("Error while creating student ->", error);
-      res
-        .status(500)
-        .json({
-          error: `Failed to create student with name ${req.body.firstName}`,
-        });
+      console.error(
+        `Failed to create student with name ${req.body.firstName}: `,
+        error
+      );
+      next(error);
     });
 });
 
-router.put("/:studentId", (req, res) => {
+router.put("/:studentId", (req, res, next) => {
   Student.findByIdAndUpdate(req.params.studentId, req.body, { new: true })
     .then((updatedStudent) => {
       console.log("Updated student ->", updatedStudent);
@@ -65,13 +64,11 @@ router.put("/:studentId", (req, res) => {
     })
     .catch((error) => {
       console.error("Error while updating student ->", error);
-      res
-        .status(500)
-        .json({ error: `Failed to update student: , ${error["message"]}` });
+      next(error);
     });
 });
 
-router.delete("/:studentId", (req, res) => {
+router.delete("/:studentId", (req, res, next) => {
   Student.findByIdAndDelete(req.params.studentId)
     .then((deletedStudent) => {
       console.log("Deleted student ->", deletedStudent);
@@ -81,9 +78,7 @@ router.delete("/:studentId", (req, res) => {
     })
     .catch((error) => {
       console.error("Error while deleting student ->", error);
-      res
-        .status(500)
-        .json({ error: `Failed to delete student: , ${error["message"]}` });
+      next(error);
     });
 });
 

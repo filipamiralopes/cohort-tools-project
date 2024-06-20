@@ -22,6 +22,15 @@ app.use("/api/cohorts", cohortRoutes)
 const studentRoutes = require("./routes/students.routes");
 app.use("/api/students", studentRoutes)
 
+// ERROR HANDLING
+const {
+  errorHandler,
+  notFoundHandler,
+} = require("./middleware/error-handling");
+
+app.use(errorHandler);
+app.use(notFoundHandler);
+
 
 // START SERVER
 app.listen(PORT, () => {
