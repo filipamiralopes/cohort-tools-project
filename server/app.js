@@ -17,6 +17,8 @@ app.get("/docs", (req, res) => {
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes)
+const userRoutes = require("./routes/users.routes");
+app.use("/api/users", userRoutes)
 const cohortRoutes = require("./routes/cohorts.routes");
 app.use("/api/cohorts", cohortRoutes)
 const studentRoutes = require("./routes/students.routes");

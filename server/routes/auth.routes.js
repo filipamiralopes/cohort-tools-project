@@ -92,7 +92,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.get("/verify", isAuthenticated, async (req, res) => {
+router.get("/verify", isAuthenticated, (req, res) => {
   if (req.payload) {
     res
       .status(200)
