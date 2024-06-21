@@ -1,6 +1,6 @@
 const express = require("express");
+require("dotenv").config();
 const PORT = 5005;
-
 const app = express();
 
 
