@@ -26,7 +26,7 @@ router.post("/signup", async (req, res, next) => {
 
   try {
     const foundUser = await User.findOne({
-      $or: [{ username: req.body.username }, { email: req.body.email }],
+      $or: [{ username: req.body.name }, { email: req.body.email }],
     });
     if (foundUser) {
       res.status(500).json({
@@ -37,14 +37,13 @@ router.post("/signup", async (req, res, next) => {
       const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
       const userToCreate = {
-        username: req.body.username,
+        username: req.body.name,
         email: req.body.email,
         password: hashedPassword,
       };
-      const createdUser = await User.create({
-        ...req.body,
-        password: hashedPassword,
-      });
+      const createdUser = await User.create(
+        userToCreate
+      );
 
       console.log("User created", createdUser);
       res.status(201).json(createdUser); 
