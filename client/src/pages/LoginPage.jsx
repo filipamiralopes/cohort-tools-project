@@ -31,7 +31,7 @@ function LoginPage() {
     axios
       .post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
-        console.log("JWT token", response.data.authToken);
+        // console.log("JWT token", response.data.authToken);
         // localStorage.setItem("authToken", response.data.authToken)
         storeToken(response.data.authToken);
         return authenticateUser()

@@ -8,14 +8,15 @@ import { AuthContext } from "../context/auth.context";
 const API_URL = import.meta.env.VITE_API_URL;
 
 
-
 function UserProfilePage() {
   const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  // console.log("HERE", user)
+  // Testing the context
+  const context = useContext(AuthContext)
+  console.log("my context", context)
 
   useEffect(() => {
     const getStudent = () => {
@@ -24,7 +25,7 @@ function UserProfilePage() {
       if (storedToken) {
         axios
         .get(
-          `${API_URL}/api/users/${user?._id}`,
+          `${API_URL}/api/users/${user._id}`,
           { headers: { authorization: `Bearer ${storedToken}` }}
           )
           .then((response) => {
